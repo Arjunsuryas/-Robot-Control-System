@@ -1,0 +1,57 @@
+import React, { useState, useEffect } from 'react';
+import { Wifi, Bluetooth, Radio, Satellite, Globe, Signal } from 'lucide-react';
+
+interface NetworkConnectivityProps {
+  isActive: boolean;
+}
+
+export const NetworkConnectivity: React.FC<NetworkConnectivityProps> = ({ isActive }) => {
+  const [connections, setConnections] = useState({
+    wifi: { status: 'connected', strength: 85, name: 'RoboNet-5G' },
+    bluetooth: { status: 'connected', devices: 3 },
+    cellular: { status: 'connected', signal: 92, carrier: 'RoboTel' },
+    satellite: { status: 'connected', latency: 45 },
+    mesh: { status: 'connected', nodes: 12 }
+  });
+
+  const [dataUsage, setDataUsage] = useState({
+    upload: 0,
+    download: 0,
+    total: 0
+  });
+
+  useEffect(() => {
+    if (isActive) {
+      const interval = setInterval(() => {
+        setConnections(prev => ({
+          ...prev,
+          wifi: { ...prev.wifi, strength: 70 + Math.random() * 30 },
+          cellular: { ...prev.cellular, signal: 80 + Math.random() * 20 },
+          satellite: { ...prev.satellite, latency: 30 + Math.random() * 30 }
+        }));
+
+        setDataUsage(prev => ({
+          upload: prev.upload + Math.random() * 10,
+          download: prev.download + Math.random() * 25,
+          total: prev.total + Math.random() * 35
+        }));
+      }, 2000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isActive]);
+
+  const networkTypes = [
+    {
+      icon: Wifi,
+      name: 'Wi-Fi',
+      status: connections.wifi.status,
+      details: `${connections.wifi.name} (${connections.wifi.strength}%)`,
+      color: 'text-blue-400'
+    },
+    {
+      icon: Bluetooth,
+      name: 'Bluetooth',
+      status: connections.bluetooth.status,
+      details: `${connections.bluetooth.devices} devices`,
+};
