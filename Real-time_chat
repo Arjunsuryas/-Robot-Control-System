@@ -1,0 +1,29 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { MessageCircle, Send, Bot, User } from 'lucide-react';
+
+interface Message {
+  id: string;
+  text: string;
+  sender: 'user' | 'robot';
+  timestamp: Date;
+}
+
+interface RealTimeChatProps {
+  isActive: boolean;
+  onCommand: (command: string) => void;
+}
+
+export const RealTimeChat: React.FC<RealTimeChatProps> = ({ isActive, onCommand }) => {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: '1',
+      text: 'Robot control system initialized. Ready for commands.',
+      sender: 'robot',
+      timestamp: new Date()
+    }
+  ]);
+  const [inputText, setInputText] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+};
