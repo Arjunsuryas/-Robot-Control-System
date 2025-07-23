@@ -1,0 +1,27 @@
+import React, { useState } from 'react';
+import { AlertTriangle, Shield, Zap, Lock, Unlock } from 'lucide-react';
+
+interface EmergencyControlsProps {
+  isActive: boolean;
+  onEmergencyStop: () => void;
+  onLockdown: () => void;
+  onReboot: () => void;
+}
+
+export const EmergencyControls: React.FC<EmergencyControlsProps> = ({
+  isActive,
+  onEmergencyStop,
+  onLockdown,
+  onReboot
+}) => {
+  const [isLocked, setIsLocked] = useState(false);
+  const [confirmAction, setConfirmAction] = useState<string | null>(null);
+
+  const handleEmergencyAction = (action: string, callback: () => void) => {
+    if (confirmAction === action) {
+      callback();
+      setConfirmAction(null);
+    } else {
+      setConfirmAction(action);
+      setTimeout(() => setConfirmAction(null), 3000);
+};
