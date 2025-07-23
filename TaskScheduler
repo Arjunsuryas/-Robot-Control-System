@@ -1,0 +1,33 @@
+import React, { useState } from 'react';
+import { Calendar, Clock, Play, Pause, Trash2, Plus } from 'lucide-react';
+
+interface Task {
+  id: string;
+  name: string;
+  action: string;
+  scheduledTime: string;
+  isActive: boolean;
+  repeat: boolean;
+}
+
+interface TaskSchedulerProps {
+  isActive: boolean;
+  onExecuteTask: (action: string) => void;
+}
+
+export const TaskScheduler: React.FC<TaskSchedulerProps> = ({ isActive, onExecuteTask }) => {
+  const [tasks, setTasks] = useState<Task[]>([
+    {
+      id: '1',
+      name: 'Morning Patrol',
+      action: 'patrol_sequence',
+      scheduledTime: '08:00',
+      isActive: true,
+      repeat: true
+    },
+    {
+      id: '2',
+      name: 'System Check',
+      action: 'diagnostic_check',
+      scheduledTime: '12:00',
+};
