@@ -1,0 +1,56 @@
+import React, { useState } from 'react';
+import { Brain, Target, Route, Scan, Wifi, Database } from 'lucide-react';
+
+interface AdvancedFunctionsProps {
+  isActive: boolean;
+  onFunction: (func: string) => void;
+}
+
+export const AdvancedFunctions: React.FC<AdvancedFunctionsProps> = ({ isActive, onFunction }) => {
+  const [activeFunction, setActiveFunction] = useState<string | null>(null);
+  const [aiMode, setAiMode] = useState('patrol');
+  const [scanProgress, setScanProgress] = useState(0);
+
+  const functions = [
+    {
+      id: 'ai_patrol',
+      icon: Brain,
+      name: 'AI Patrol',
+      description: 'Autonomous patrol with obstacle avoidance',
+      color: 'bg-purple-600 hover:bg-purple-700'
+    },
+    {
+      id: 'target_tracking',
+      icon: Target,
+      name: 'Target Tracking',
+      description: 'Track and follow designated targets',
+      color: 'bg-red-600 hover:bg-red-700'
+    },
+    {
+      id: 'path_planning',
+      icon: Route,
+      name: 'Path Planning',
+      description: 'Calculate optimal routes to destinations',
+      color: 'bg-green-600 hover:bg-green-700'
+    },
+    {
+      id: 'environment_scan',
+      icon: Scan,
+      name: 'Environment Scan',
+      description: 'Full 360° environmental mapping',
+      color: 'bg-blue-600 hover:bg-blue-700'
+    },
+    {
+      id: 'network_sync',
+      icon: Wifi,
+      name: 'Network Sync',
+      description: 'Sync with other robots in network',
+      color: 'bg-cyan-600 hover:bg-cyan-700'
+    },
+    {
+      id: 'data_collection',
+      icon: Database,
+      name: 'Data Collection',
+      description: 'Gather and analyze environmental data',
+      color: 'bg-yellow-600 hover:bg-yellow-700'
+};
