@@ -1,0 +1,28 @@
+import React, { useState, useEffect } from 'react';
+import { Cloud, Sun, CloudRain, Wind, Thermometer, Droplets } from 'lucide-react';
+
+interface WeatherEnvironmentProps {
+  isActive: boolean;
+}
+
+export const WeatherEnvironment: React.FC<WeatherEnvironmentProps> = ({ isActive }) => {
+  const [weather, setWeather] = useState({
+    condition: 'sunny',
+    temperature: 22,
+    humidity: 45,
+    windSpeed: 12,
+    pressure: 1013,
+    visibility: 10
+  });
+
+  const [environmentMode, setEnvironmentMode] = useState('outdoor');
+
+  useEffect(() => {
+    if (isActive) {
+      const interval = setInterval(() => {
+        setWeather(prev => ({
+          ...prev,
+          temperature: 20 + Math.random() * 15,
+          humidity: 30 + Math.random() * 40,
+          windSpeed: Math.random() * 25,
+};
