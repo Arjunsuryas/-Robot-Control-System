@@ -1,0 +1,57 @@
+import React, { useState, useEffect } from 'react';
+import { Eye, Radar, Thermometer, Gauge, Camera, Mic } from 'lucide-react';
+
+interface SensorReadingsProps {
+  isActive: boolean;
+}
+
+export const SensorReadings: React.FC<SensorReadingsProps> = ({ isActive }) => {
+  const [sensorData, setSensorData] = useState({
+    camera: { status: 'offline', objects: 0 },
+    lidar: { distance: 0, obstacles: 0 },
+    temperature: { internal: 25, external: 22 },
+    pressure: { value: 1013, unit: 'hPa' },
+    microphone: { level: 0, detecting: false },
+    proximity: { front: 100, back: 100, left: 100, right: 100 }
+  });
+
+  useEffect(() => {
+    if (isActive) {
+      const interval = setInterval(() => {
+        setSensorData({
+          camera: {
+            status: 'active',
+            objects: Math.floor(Math.random() * 5)
+          },
+          lidar: {
+            distance: Math.floor(Math.random() * 500) + 50,
+            obstacles: Math.floor(Math.random() * 3)
+          },
+          temperature: {
+            internal: 25 + Math.random() * 20,
+            external: 20 + Math.random() * 15
+          },
+          pressure: {
+            value: 1013 + (Math.random() - 0.5) * 20,
+            unit: 'hPa'
+          },
+          microphone: {
+            level: Math.random() * 100,
+            detecting: Math.random() > 0.7
+          },
+          proximity: {
+            front: Math.floor(Math.random() * 200) + 50,
+            back: Math.floor(Math.random() * 200) + 50,
+            left: Math.floor(Math.random() * 200) + 50,
+            right: Math.floor(Math.random() * 200) + 50
+          }
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    } else {
+      setSensorData({
+        camera: { status: 'offline', objects: 0 },
+        lidar: { distance: 0, obstacles: 0 },
+        temperature: { internal: 25, external: 22 },
+};
