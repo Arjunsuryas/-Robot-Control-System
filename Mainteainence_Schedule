@@ -1,0 +1,27 @@
+import React, { useState } from 'react';
+import { Wrench, Calendar, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
+
+interface MaintenanceTask {
+  id: string;
+  component: string;
+  type: 'routine' | 'repair' | 'upgrade' | 'inspection';
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  scheduledDate: string;
+  estimatedDuration: string;
+  status: 'pending' | 'in-progress' | 'completed' | 'overdue';
+  description: string;
+}
+
+interface MaintenanceSchedulerProps {
+  isActive: boolean;
+  onMaintenanceStart: (task: MaintenanceTask) => void;
+}
+
+export const MaintenanceScheduler: React.FC<MaintenanceSchedulerProps> = ({ 
+  isActive, 
+  onMaintenanceStart 
+}) => {
+  const [tasks, setTasks] = useState<MaintenanceTask[]>([
+    {
+      id: '1',
+};
