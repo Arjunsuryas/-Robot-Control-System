@@ -1,0 +1,28 @@
+import React from 'react';
+import { Activity, Cpu, Thermometer, Zap } from 'lucide-react';
+
+interface DiagnosticsPanelProps {
+  isActive: boolean;
+  parts: Record<string, boolean>;
+}
+
+export const DiagnosticsPanel: React.FC<DiagnosticsPanelProps> = ({ isActive, parts }) => {
+  const generateRandomMetric = (base: number, variance: number) => {
+    return (base + (Math.random() - 0.5) * variance).toFixed(1);
+  };
+
+  const diagnostics = [
+    {
+      icon: Cpu,
+      label: 'CPU Usage',
+      value: isActive ? `${generateRandomMetric(45, 20)}%` : '0%',
+      color: 'text-blue-400'
+    },
+    {
+      icon: Activity,
+      label: 'Memory',
+      value: isActive ? `${generateRandomMetric(67, 15)}%` : '0%',
+      color: 'text-green-400'
+    },
+    {
+};
