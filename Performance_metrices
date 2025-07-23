@@ -1,0 +1,30 @@
+import React, { useState, useEffect } from 'react';
+import { TrendingUp, Zap, HardDrive, Wifi } from 'lucide-react';
+
+interface PerformanceData {
+  timestamp: number;
+  cpu: number;
+  memory: number;
+  network: number;
+  power: number;
+}
+
+interface PerformanceMonitorProps {
+  isActive: boolean;
+}
+
+export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ isActive }) => {
+  const [performanceData, setPerformanceData] = useState<PerformanceData[]>([]);
+  const [currentMetrics, setCurrentMetrics] = useState({
+    cpu: 0,
+    memory: 0,
+    network: 0,
+    power: 0
+  });
+
+  useEffect(() => {
+    if (isActive) {
+      const interval = setInterval(() => {
+        const newData: PerformanceData = {
+          timestamp: Date.now(),
+};
