@@ -1,0 +1,26 @@
+import React, { useState } from 'react';
+import { Target, MapPin, Clock, CheckCircle, AlertCircle, Play, Pause } from 'lucide-react';
+
+interface Mission {
+  id: string;
+  name: string;
+  objective: string;
+  status: 'pending' | 'active' | 'completed' | 'failed';
+  progress: number;
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  estimatedTime: string;
+}
+
+interface MissionControlProps {
+  isActive: boolean;
+  onMissionStart: (mission: Mission) => void;
+}
+
+export const MissionControl: React.FC<MissionControlProps> = ({ isActive, onMissionStart }) => {
+  const [missions, setMissions] = useState<Mission[]>([
+    {
+      id: '1',
+      name: 'Perimeter Patrol',
+      objective: 'Patrol designated area and report anomalies',
+      status: 'pending',
+};
