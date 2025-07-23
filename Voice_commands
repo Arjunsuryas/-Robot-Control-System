@@ -1,0 +1,59 @@
+import React, { useState, useEffect } from 'react';
+import { Mic, MicOff, Volume2 } from 'lucide-react';
+
+interface VoiceCommandsProps {
+  isActive: boolean;
+  onCommand: (command: string) => void;
+}
+
+export const VoiceCommands: React.FC<VoiceCommandsProps> = ({ isActive, onCommand }) => {
+  const [isListening, setIsListening] = useState(false);
+  const [lastCommand, setLastCommand] = useState('');
+  const [recognition, setRecognition] = useState<any>(null);
+
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+      const recognitionInstance = new SpeechRecognition();
+      recognitionInstance.continuous = false;
+      recognitionInstance.interimResults = false;
+      recognitionInstance.lang = 'en-US';
+
+      recognitionInstance.onresult = (event: any) => {
+        const command = event.results[0][0].transcript.toLowerCase();
+        setLastCommand(command);
+        onCommand(command);
+        setIsListening(false);
+      };
+
+      recognitionInstance.onerror = () => {
+        setIsListening(false);
+      };
+
+      recognitionInstance.onend = () => {
+        setIsListening(false);
+      };
+
+      setRecognition(recognitionInstance);
+    }
+  }, [onCommand]);
+
+  const startListening = () => {
+    if (recognition && isActive) {
+      setIsListening(true);
+      recognition.start();
+    }
+  };
+
+  const stopListening = () => {
+    if (recognition) {
+      recognition.stop();
+      setIsListening(false);
+    }
+  };
+
+  const predefinedCommands = [
+    'activate robot',
+    'shutdown robot',
+    'move forward',
+};
