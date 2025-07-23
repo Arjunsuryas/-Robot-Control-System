@@ -1,0 +1,65 @@
+import React, { useState, useEffect } from 'react';
+import { Battery, Zap, TrendingDown, TrendingUp, AlertTriangle } from 'lucide-react';
+
+interface BatteryCell {
+  id: string;
+  voltage: number;
+  temperature: number;
+  health: number;
+  cycles: number;
+}
+
+interface BatteryManagementProps {
+  isActive: boolean;
+  battery: number;
+}
+
+export const BatteryManagement: React.FC<BatteryManagementProps> = ({ isActive, battery }) => {
+  const [cells, setCells] = useState<BatteryCell[]>([
+    { id: 'A1', voltage: 3.7, temperature: 25, health: 98, cycles: 245 },
+    { id: 'A2', voltage: 3.8, temperature: 26, health: 97, cycles: 251 },
+    { id: 'B1', voltage: 3.6, temperature: 24, health: 99, cycles: 198 },
+    { id: 'B2', voltage: 3.7, temperature: 25, health: 96, cycles: 267 }
+  ]);
+
+  const [powerStats, setPowerStats] = useState({
+    consumption: 0,
+    generation: 0,
+    efficiency: 0,
+    timeRemaining: 0
+  });
+
+  const [chargingMode, setChargingMode] = useState('auto');
+
+  useEffect(() => {
+    if (isActive) {
+      const interval = setInterval(() => {
+        setCells(prev => prev.map(cell => ({
+          ...cell,
+          voltage: 3.5 + Math.random() * 0.5,
+          temperature: 23 + Math.random() * 6,
+          health: Math.max(90, cell.health - Math.random() * 0.01)
+        })));
+
+        setPowerStats({
+          consumption: 800 + Math.random() * 400,
+          generation: Math.random() * 200,
+          efficiency: 85 + Math.random() * 10,
+          timeRemaining: Math.max(0, (battery / 100) * 8 + Math.random() * 2)
+        });
+      }, 2000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isActive, battery]);
+
+  const getBatteryIcon = () => {
+    if (battery > 75) return '🔋';
+    if (battery > 50) return '🔋';
+    if (battery > 25) return '🪫';
+    return '🪫';
+  };
+
+  const getHealthColor = (health: number) => {
+    if (health > 95) return 'text-green-400';
+};
